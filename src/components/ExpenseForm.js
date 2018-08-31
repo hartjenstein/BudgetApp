@@ -1,15 +1,18 @@
 import React from 'react';
 import moment from 'moment';
 import { SingleDatePicker } from 'react-dates';
-import 'react-dates/lib/css/_datepicker.css';
+
 
 //const date = new Date();
 //moment example
 const now = moment();
 console.log(now.format('MMM Do, YYYY'));
 
-// using local state to keep track of the changes the user makes in the form
+// * using local state to keep track of the changes the user makes in the form
 // only if user submits we send it of to redux
+// * why did we switch back to the constructor function? We want to 
+//populate the state with exitsing state which we get passed down from the edit expense page 
+// via props. If we dont set up the contructor function there is no way to access the props! 
 export default class ExpenseForm extends React.Component {
     constructor(props) {
         super(props);
@@ -57,12 +60,12 @@ export default class ExpenseForm extends React.Component {
         if (!this.state.description || !this.state.amount) {
             this.setState(() => ({ error: 'Please enter a description and a amount'}));
         } else {
-            this.setState(() => ({ error: ' ' }));
+            this.setState(() => ({ error: '' }));
             this.props.onSubmit({ 
                 description: this.state.description,
                 amount: parseFloat(this.state.amount, 10) * 100,
                 // valueOF() -> momentJS method to get the timestamp back
-                createAt: this.state.createdAt.valueOf(),
+                createdAt: this.state.createdAt.valueOf(),
                 note: this.state.note
             })
         }

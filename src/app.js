@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import AppRouter from './routers/Approuter';
 import configureStore from './store/configureStore';
-import 'normalize.css/normalize.css';
-import './styles/styles.scss';
 import { addExpense } from './actions/expenses.js';
 import getVisibleExpenses from './selectors/expenses.js';
 import { setTextFilter } from './actions/filters';
-
+import 'normalize.css/normalize.css';
+import './styles/styles.scss';
+import 'react-dates/lib/css/_datepicker.css';
 
 const store = configureStore();
 

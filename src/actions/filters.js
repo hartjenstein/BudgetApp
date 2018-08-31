@@ -1,5 +1,3 @@
-
-
 // Action generators for filters reducer
 
 // SET_TEXT_FILTER
