@@ -6,7 +6,7 @@ exports[`should render correctly with 1 expense 1`] = `
     You have 
     1
      
-    Expense
+    expense
      with a total of 
     $0.14
   </h3>
@@ -19,7 +19,7 @@ exports[`should render correctly with multiple expenses 1`] = `
     You have 
     3
      
-    Expenses
+    expenses
      with a total of 
     $0.41
   </h3>

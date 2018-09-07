@@ -9,9 +9,11 @@ import { setTextFilter } from './actions/filters';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 import 'react-dates/lib/css/_datepicker.css';
+import './firebase/firebase';
+
 
 const store = configureStore();
-
+/* 
 store.subscribe(() => {
     const state = store.getState();
     const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
@@ -21,7 +23,7 @@ store.subscribe(() => {
 
 store.dispatch(addExpense({ description: 'Water Bill', amount: 100}));
 store.dispatch(addExpense({ description: 'Gas Bill', amount: 300, createdAt: 1000}));
-store.dispatch(addExpense({ description: 'Phone', amount: 300}));
+store.dispatch(addExpense({ description: 'Phone', amount: 300})); */
 
 const jsx = (
    <Provider store={store}>

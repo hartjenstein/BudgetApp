@@ -15,7 +15,7 @@ export class ExpenseSummary extends React.Component {
             <div>
                 <h3>
                 
-                   You have {this.props.expenses.length} {this.props.expenses.length === 1 ? 'Expense' : 'Expenses' } with a total of {this.expenseTotal()}
+                   You have {this.props.expenses.length} {this.props.expenses.length === 1 ? 'expense' : 'expenses' } with a total of {this.expenseTotal()}
                     
                 </h3>
             </div>
