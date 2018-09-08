@@ -1,4 +1,4 @@
-import { addExpense, editExpense, removeExpense, startAddExpense } from '../../actions/expenses';
+import { addExpense, editExpense, removeExpense, startAddExpense, setExpenses, startSetExpenses } from '../../actions/expenses';
 import expenses from '../fixtures/expenses';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -6,6 +6,16 @@ import database from '../../firebase/firebase';
 
 // we can pass in an array with middleware
 const createMockStore = configureMockStore([thunk]);
+
+beforeEach((done) => {
+  const expensesData = {};
+  expenses.forEach(({ id, description, note, amount, createdAt }) => {   //using ES6 object destructuring
+    expensesData[id] = { description, note, amount, createdAt };     // using ES6 shorthand
+
+  });
+  database.ref('expenses').set(expensesData).then(() => done())
+  .catch((err) => console.log('ERR:', err));
+})
 
 // removeExpense
 
@@ -59,8 +69,7 @@ test('should add expense to database and store', (done) => {
 
 	store.dispatch(startAddExpense(expenseData))
 		.then(() => {
-			// store.getActions gets all the actions that were dispatched to the mock store
-			const actions = store.getActions();
+			const actions = store.getActions(); // store.getActions gets all the actions that were dispatched to the mock store
 			expect(actions[0])
 				.toEqual({
 					type: 'ADD_EXPENSE',
@@ -93,9 +102,7 @@ test('should add expense with defaults to database and store', () => {
       createdAt: 0
     };
     store.dispatch(startAddExpense({})).then(() => {
-        // store.getActions gets all the actions that were dispatched to the mock store
-       const actions = store.getActions();
-
+       const actions = store.getActions();   // store.getActions gets all the actions that were dispatched to the mock store
        expect(actions[0]).toEqual({
            type: 'ADD_EXPENSE',
            expense: {
@@ -114,6 +121,7 @@ test('should add expense with defaults to database and store', () => {
     });
 });
 
+// old test case 
 /* test('should setup addExpense action object with default values', () => {
     const action = addExpense();
     expect(action).toEqual({
@@ -127,3 +135,24 @@ test('should add expense with defaults to database and store', () => {
         }
     })
 }); */
+
+test('should setup set expense action object with data', () => {
+  const action = setExpenses(expenses);
+  expect(action).toEqual({   // toEqual() when comparing objects or arrays .toBe() otherwise
+    type: 'SET_EXPENSES',
+    expenses
+  })
+});
+
+test('should fetch expenses from firebase', (done) => { // we use done for async test cases so the test case is not executed until the data from the promise came back
+  const store = createMockStore({});
+  store.dispatch(startSetExpenses()).then(() => {
+    const actions = store.getActions();     // we get all the actions back from the mockstore (only one in this case)
+    expect(actions[0]).toEqual({     // actions[0] is the last action that was dipsatched to the mock store 
+      type: 'SET_EXPENSES',
+      expenses
+    });
+    done();
+  });
+})
+

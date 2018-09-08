@@ -33,13 +33,15 @@ import database from '../firebase/firebase';
         createdAt
 }
 }); */
-
+// the ADD_EXPENSE action generator (above) is simplefied and we add the  async action gen. startAddExpense, as firebase database only takes objects and 
+// the redux store state only accepts arrays.
 export const addExpense = (expense) => ({
 	type: 'ADD_EXPENSE',
 	expense
 });
 
 export const startAddExpense = (expenseData = {}) => {
+  // passing dispatch as an arguement, this is happening internally with thunk middleware and redux! 
 	return (dispatch) => {
 		const {
 			//moving defaults here from ADD_EXPENSE, destructuring inside function instead of in the arguements to make it readable more easily
@@ -77,3 +79,25 @@ export const editExpense = (id, updates) => ({
 	id,
 	updates
 });
+
+// SET_EXPENSES
+export const setExpenses = (expenses) => ({
+  type: 'SET_EXPENSES',
+  expenses
+});
+
+//Async function to handle firebase set data
+export const startSetExpenses = () => {
+ return (dispatch) => {
+    return database.ref('expenses').once('value').then((snapshot) => {
+      const expenses = [];
+      snapshot.forEach((childSnapshot) => {
+        expenses.push({
+          id: childSnapshot.key,
+          ...childSnapshot.val()
+        });
+      });
+      dispatch(setExpenses(expenses));
+    });
+  }
+};
