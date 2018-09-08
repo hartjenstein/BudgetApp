@@ -1,6 +1,5 @@
 import * as firebase from 'firebase';
 
-
 // Initialize Firebase
   const config = {
     apiKey: process.env.FIREBASE_API_KEY,
@@ -16,8 +15,13 @@ import * as firebase from 'firebase';
 firebase.initializeApp(config);
 
 const database = firebase.database();
+const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
-export { firebase, database as default };
+googleAuthProvider.setCustomParameters({
+  'prompt': 'select_account'
+ });
+ 
+export { firebase, googleAuthProvider, database as default };
 
 /* 
 database.ref('expenses').on('child_changed', (snapshot) => {

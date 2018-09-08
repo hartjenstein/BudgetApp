@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ExpenseForm from './ExpenseForm';
-import { editExpense, startRemoveExpense } from '../actions/expenses';
+import { editExpense, startRemoveExpense, startEditExpense } from '../actions/expenses';
 // Refactor to class based components so we can convert inline functions (meaning in JSX defined) to methods, 
 // so that they dont have to be redefined everytime the component gets rendered (for testing purposes )
 
 // there are special props that are passed down by react router like the history object
 export class EditExpensePage extends React.Component {
   handleOnSubmit = (expense) => {
-    this.props.editExpense(this.props.expense.id, expense);
+    this.props.startEditExpense(this.props.expense.id, expense);
     this.props.history.push('/');
   };
 
@@ -42,7 +42,7 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchToProps = (dispatch, props) => (
-  { editExpense: (id, expense) => dispatch(editExpense(id, expense)),
+  { startEditExpense: (id, expense) => dispatch(startEditExpense(id, expense)),
     startRemoveExpense: (data) => dispatch(startRemoveExpense(data))
   });
 
