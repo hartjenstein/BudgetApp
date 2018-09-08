@@ -88,6 +88,7 @@ export const setExpenses = (expenses) => ({
 
 //Async function to handle firebase set data
 export const startSetExpenses = () => {
+  // dispatch arguement is provided internally from thunk middleware 
  return (dispatch) => {
     return database.ref('expenses').once('value').then((snapshot) => {
       const expenses = [];
@@ -100,4 +101,12 @@ export const startSetExpenses = () => {
       dispatch(setExpenses(expenses));
     });
   }
+};
+
+export const startRemoveExpense = ({ id } = {}) => {
+  return (dispatch) => { // dispatch arguement gets passed in by redux library / redux thunk middleware
+    return database.ref(`expenses/${id}`).remove().then(() => {
+      dispatch(removeExpense({ id }));
+    });
+  };
 };

@@ -34,7 +34,7 @@ export class AddExpensePage extends React.Component {
     </div>
   ); */
 ///
-    //const in order to make this component testable with jest
+    //mapDispatchToProps in order to make this component testable with jest
   // we set up the function that connect() takes as a second arguement
   // with mapDispatchProps we pass the call to dispatch and make it testable this way
   //( mapDispatchProps -> a way to return dispatcher functions, abstracting them away from the component itself)

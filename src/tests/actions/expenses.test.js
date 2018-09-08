@@ -1,4 +1,4 @@
-import { addExpense, editExpense, removeExpense, startAddExpense, setExpenses, startSetExpenses } from '../../actions/expenses';
+import { addExpense, editExpense, removeExpense, startAddExpense, setExpenses, startSetExpenses, startRemoveExpense } from '../../actions/expenses';
 import expenses from '../fixtures/expenses';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -116,9 +116,9 @@ test('should add expense with defaults to database and store', () => {
         // calling done tells jest that we are done making assertions
         // jest is forced to wait until done() is called
         done();
-    }).catch((err) => {
+    })/* .catch((err) => {
       console.log('ERR', err);
-    });
+    }); */
 });
 
 // old test case 
@@ -136,7 +136,7 @@ test('should add expense with defaults to database and store', () => {
     })
 }); */
 
-test('should setup set expense action object with data', () => {
+test('should setup SET_EXPENSE action object with data', () => {
   const action = setExpenses(expenses);
   expect(action).toEqual({   // toEqual() when comparing objects or arrays .toBe() otherwise
     type: 'SET_EXPENSES',
@@ -155,4 +155,22 @@ test('should fetch expenses from firebase', (done) => { // we use done for async
     done();
   });
 })
+
+test('should remove Expense from Firebase', done => {
+  const store = createMockStore({});
+  const id = expenses[0].id;
+  store.dispatch(startRemoveExpense({ id })).then(() => {
+    const actions = store.getActions();
+    expect(actions[0]).toEqual({
+      type: 'REMOVE_EXPENSE',
+      id
+    })
+    return database.ref(`expenses/${id}`).once('value').then((snapshot) => {
+      expect(snapshot.val()).toBeFalsy(); // expect the expense with this id not exist, thus expect it to be null
+      done();
+    });
+  })
+
+});
+
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ExpenseForm from './ExpenseForm';
-import { editExpense, removeExpense } from '../actions/expenses';
+import { editExpense, startRemoveExpense } from '../actions/expenses';
 // Refactor to class based components so we can convert inline functions (meaning in JSX defined) to methods, 
 // so that they dont have to be redefined everytime the component gets rendered (for testing purposes )
 
@@ -13,7 +13,7 @@ export class EditExpensePage extends React.Component {
   };
 
   handleOnClick= () => {
-    this.props.removeExpense({id: this.props.expense.id})
+    this.props.startRemoveExpense({id: this.props.expense.id})
     this.props.history.push('/');
   };
 
@@ -43,7 +43,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch, props) => (
   { editExpense: (id, expense) => dispatch(editExpense(id, expense)),
-    removeExpense: (data) => dispatch(removeExpense(data))
+    startRemoveExpense: (data) => dispatch(startRemoveExpense(data))
   });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditExpensePage);
