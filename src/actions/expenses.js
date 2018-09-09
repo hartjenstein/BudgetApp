@@ -41,8 +41,10 @@ export const addExpense = (expense) => ({
 });
 
 export const startAddExpense = (expenseData = {}) => {
-  // passing dispatch as an arguement, this is happening internally with thunk middleware and redux! 
-	return (dispatch) => {
+  // passing dispatch / getState as an arguement, this is happening internally with thunk middleware and redux! 
+  // - thunked asyync actions
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
 		const {
 			//moving defaults here from ADD_EXPENSE, destructuring inside function instead of in the arguements to make it readable more easily
 			description = '',
@@ -56,7 +58,7 @@ export const startAddExpense = (expenseData = {}) => {
 		//and gets called with ref as an arguement - we get the ref object returned from our call to the database
 		// ref.key contains the id firebase created for data set we've just pushed
 		// 
-		return database.ref('expenses')
+		return database.ref(`users/${uid}/expenses`)
 			.push(expense)
 			.then((ref) => {
 				dispatch(addExpense({
@@ -81,8 +83,9 @@ export const editExpense = (id, updates) => ({
 });
 
 export const startEditExpense = (id, updates) => {
-  return (dispatch) => {
-    return database.ref(`expenses/${id}`).update({
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+    return database.ref(`users/${uid}/expenses/${id}`).update({
       ...updates
     }).then(() => {
       dispatch(editExpense(id, updates))
@@ -98,9 +101,10 @@ export const setExpenses = (expenses) => ({
 
 //Async function to handle firebase set data
 export const startSetExpenses = () => {
-  // dispatch arguement is provided internally from thunk middleware 
- return (dispatch) => {
-    return database.ref('expenses').once('value').then((snapshot) => {
+  // dispatch / getState arguement is provided internally from thunk middleware 
+ return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+    return database.ref(`users/${uid}/expenses`).once('value').then((snapshot) => {
       const expenses = [];
       snapshot.forEach((childSnapshot) => {
         expenses.push({
@@ -114,8 +118,9 @@ export const startSetExpenses = () => {
 };
 
 export const startRemoveExpense = ({ id } = {}) => {
-  return (dispatch) => { // dispatch arguement gets passed in by redux library / redux thunk middleware
-    return database.ref(`expenses/${id}`).remove().then(() => {
+  return (dispatch, getState) => { // dispatch / gestState arguement gets passed in by redux library / redux thunk middleware
+    const uid = getState().auth.uid; 
+    return database.ref(`users/${uid}/expenses/${id}`).remove().then(() => {
       dispatch(removeExpense({ id }));
     });
   };
