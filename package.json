@@ -1,8 +1,8 @@
 {
-  "name": "expensify",
+  "name": "Budget Control",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "Andrew Mead",
+  "author": "N Hartjenstein",
   "license": "MIT",
   "scripts": {
     "build:dev": "webpack",
