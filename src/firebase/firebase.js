@@ -17,6 +17,7 @@ firebase.initializeApp(config);
 const database = firebase.database();
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
+// Google Options: load Google Accoutn selection everytime
 googleAuthProvider.setCustomParameters({
   'prompt': 'select_account'
  });

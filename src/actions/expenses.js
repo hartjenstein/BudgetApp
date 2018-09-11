@@ -104,18 +104,38 @@ export const startSetExpenses = () => {
   // dispatch / getState arguement is provided internally from thunk middleware 
  return (dispatch, getState) => {
     const uid = getState().auth.uid;
-    return database.ref(`users/${uid}/expenses`).once('value').then((snapshot) => {
-      const expenses = [];
-      snapshot.forEach((childSnapshot) => {
-        expenses.push({
-          id: childSnapshot.key,
-          ...childSnapshot.val()
+
+  return database.ref(`users/${uid}/expenses`).once('value').then((snapshot) => {
+        const expenses = []; 
+        snapshot.forEach((childSnapshot) => {
+          expenses.push({
+            id: childSnapshot.key,
+            ...childSnapshot.val()
+          });
         });
+        dispatch(setExpenses(expenses));
       });
-      dispatch(setExpenses(expenses));
-    });
   }
 };
+// Listen to Change on Database
+export const listenToChange = () => {
+  // dispatch / getState arguement is provided internally from thunk middleware 
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+
+  return database.ref(`users/${uid}/expenses`).on('value', snapshot => {
+        const expenses = []; 
+        snapshot.forEach((childSnapshot) => {
+          expenses.push({
+            id: childSnapshot.key,
+            ...childSnapshot.val()
+          });
+        });
+        dispatch(setExpenses(expenses));
+      });
+  }
+};
+
 
 export const startRemoveExpense = ({ id } = {}) => {
   return (dispatch, getState) => { // dispatch / gestState arguement gets passed in by redux library / redux thunk middleware
