@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { firebase } from './firebase/firebase';
+import { firebase, database } from './firebase/firebase';
 import AppRouter, { history } from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import { startSetExpenses, listenToChange } from './actions/expenses.js';
@@ -41,6 +41,11 @@ const renderApp = () => {
   }
 };
 
+const cancelObserver = (uid) => {
+  console.log(uid)
+     return firebase.database().ref(`users/${uid}`).off();
+ };
+
 ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 
 // runs on inital page load
@@ -53,6 +58,7 @@ firebase.auth().onAuthStateChanged((user) => {
       history.push('/dashboard');
     }
     });
+    cancelObserver(user.uid);
     store.dispatch(listenToChange());
   } else {
     store.dispatch(logout());

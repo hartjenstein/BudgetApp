@@ -123,16 +123,19 @@ export const listenToChange = () => {
   return (dispatch, getState) => {
     const uid = getState().auth.uid;
 
-  return database.ref(`users/${uid}/expenses`).on('value', snapshot => {
-        const expenses = []; 
-        snapshot.forEach((childSnapshot) => {
-          expenses.push({
-            id: childSnapshot.key,
-            ...childSnapshot.val()
-          });
+    return database.ref(`users/${uid}/expenses`).on('value', snapshot => {
+      const expenses = []; 
+      snapshot.forEach((childSnapshot) => {
+        expenses.push({
+          id: childSnapshot.key,
+          ...childSnapshot.val()
         });
-        dispatch(setExpenses(expenses));
       });
+      setTimeout(() => {
+        dispatch(setExpenses(expenses));
+      }, 2000);
+      
+    });
   }
 };
 
