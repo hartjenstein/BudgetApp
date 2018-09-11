@@ -1,8 +1,8 @@
 {
-  "name": "Budget Control",
+  "name": "BudgetControl",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "N Hartjenstein",
+  "author": "N_Hartjenstein",
   "license": "MIT",
   "scripts": {
     "build:dev": "webpack",
