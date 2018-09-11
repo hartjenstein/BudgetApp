@@ -136,7 +136,6 @@ export const listenToChange = () => {
   }
 };
 
-
 export const startRemoveExpense = ({ id } = {}) => {
   return (dispatch, getState) => { // dispatch / gestState arguement gets passed in by redux library / redux thunk middleware
     const uid = getState().auth.uid; 
