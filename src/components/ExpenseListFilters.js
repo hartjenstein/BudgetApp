@@ -27,17 +27,23 @@ export class ExpenseListFilters extends React.Component {
 
     render() { 
         return (
-            <div>
-                <input type="text" value={this.props.filters.text} onChange={this.onTextFilterChange} />
-                <select 
-                value={this.props.filters.sortBy} // provides controlled input - single point of truth.
-                // Otherwise data would be coming from DOM and could differ
-                onChange={this.onSortByChange}
-                >
-                    <option value="date">Date</option>
-                    <option value="amount">Amount</option>
-                </select>
-                <DateRangePicker 
+            <div className="content-container">
+              <div className="input-group">
+                <div className="input-group__item">
+                  <input className="input--text" placeholder="Search Expenses" type="text" value={this.props.filters.text} onChange={this.onTextFilterChange} />
+                </div>
+                <div className="input-group__item">
+                  <select className="input--select"
+                  value={this.props.filters.sortBy} // provides controlled input - single point of truth.
+                  // Otherwise data would be coming from DOM and could differ
+                  onChange={this.onSortByChange}
+                  >
+                      <option value="date">Date</option>
+                      <option value="amount">Amount</option>
+                  </select>
+                </div>
+                <div className="input-group__item">
+                    <DateRangePicker 
                     // props required by DateRangePicker
                     startDate={this.props.filters.startDate}
                     endDate={this.props.filters.endDate}
@@ -49,8 +55,10 @@ export class ExpenseListFilters extends React.Component {
                     numberOfMonths={1}
                     // enable range beyond current date
                     isOutsideRange={() => false}
-                />
-        </div> 
+                    />
+                 </div>
+              </div>   
+            </div> 
         );
     }
 };

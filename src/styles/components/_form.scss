@@ -1,0 +1,12 @@
+.form {
+  display: flex; //sets everything equal to full witdh
+  flex-direction: column;
+  > * { // direct descendants selector
+    margin-bottom: $m-size;
+  }
+}
+
+.form__error {
+  margin: 0 0 $m-size 0;
+  font-style: italic;
+}

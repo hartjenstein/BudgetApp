@@ -1,11 +1,60 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render LoginPage 1`] = `
-<div>
-  <button
-    onClick={[Function]}
+<div
+  className="box-layout"
+>
+  <div
+    className="box-layout__box"
   >
-    Login
-  </button>
+    <h1
+      className="box-layout__title"
+    >
+      Budget Control
+    </h1>
+    <p>
+      It's time to get your Expenses under control
+    </p>
+    <button
+      className="button button--login"
+      onClick={[Function]}
+    >
+      Login with Google
+    </button>
+  </div>
+  <CookieBanner
+    buttonMessage="Got it"
+    cookie="user-has-accepted-cookies"
+    cookieExpiration={
+      Object {
+        "years": 1,
+      }
+    }
+    cookies={
+      Cookies {
+        "HAS_DOCUMENT_COOKIE": true,
+        "changeListeners": Array [],
+        "cookies": Object {},
+        "hooks": undefined,
+      }
+    }
+    dismissOnScroll={true}
+    dismissOnScrollThreshold={0}
+    message="We use cookies to give you the best online experience. Please let us know if you agree."
+    onAccept={[Function]}
+    styles={
+      Object {
+        "banner": Object {
+          "backgroundColor": "rgba(60, 60, 60, 0.8)",
+          "left": 0,
+          "position": "fixed",
+          "top": 0,
+        },
+        "message": Object {
+          "fontWeight": 400,
+        },
+      }
+    }
+  />
 </div>
 `;

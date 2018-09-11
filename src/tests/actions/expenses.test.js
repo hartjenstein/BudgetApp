@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 import database from '../../firebase/firebase';
 
 const uid = 'testuid'
+const defaultAuthState = {auth: { uid }}
 // we can pass in an array with middleware
 const createMockStore = configureMockStore([thunk]);
 

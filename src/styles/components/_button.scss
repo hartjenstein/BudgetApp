@@ -1,0 +1,52 @@
+
+.button {
+  border: none;
+  border-radius: 2px;
+  background: $blue;
+  color: white;
+  display: inline-block;
+  font-size: $button-font-size-l;
+  font-weight: 300;
+  letter-spacing: 0.08rem;
+  line-height: 1;
+  padding: 1rem;
+  text-decoration: none;
+}
+
+
+.button--login {
+  height: 6rem;
+  position: relative;
+  max-width: 24rem;
+
+  &::before{
+    background: rgba(33, 33, 33, 0.4);
+    bottom: 6rem;
+    content: "";
+    left: 0rem;
+    height: 0rem;
+    position: absolute;
+    transition: height 0.3s;
+    transform: translateY(100%);
+    min-width: 100%;
+    z-index: -1;
+  }
+
+  &:hover {
+    &::before {
+      height: 6rem;
+  /*     transform: max-height; */
+      z-index: 0;
+    }
+
+  }
+}
+
+.button--link {
+  background: none;
+  font-size: $m-size;
+}
+
+.button--secondary {
+  background: #888888;
+}
